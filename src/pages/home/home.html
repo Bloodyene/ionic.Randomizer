@@ -1,17 +1,24 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>Home</ion-title>
+    <ion-title>Zawodnicy</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  <h2>Welcome to Ionic!</h2>
-  <p>
-    This starter project comes with simple tabs-based layout for apps
-    that are going to primarily use a Tabbed UI.
-  </p>
-  <p>
-    Take a look at the <code>src/pages/</code> directory to add or change tabs,
-    update any existing page or create new pages.
-  </p>
+  <ion-list inset>
+    <ion-item>
+      <ion-label floating>Nazwa zawodnika</ion-label>
+      <ion-input [(ngModel)]='playerToAdd'></ion-input>
+    </ion-item>
+    <button ion-button block color='secondary' [disabled]='!playerToAdd' (click)='addPlayer()'>Dodaj</button>
+    <ion-item *ngFor='let player of players; let i = index'>
+      <p (click)='stagePlayer(i)'>{{player}}</p>
+      <button ion-button item-end color="danger" (click)='removePlayer(player)'>X</button>
+    </ion-item>
+    <h1>Wybrani zawodnicy</h1>
+    <ion-item item *ngFor='let player of stagedPlayers; let i = index'>
+      <p [style.background-color]="i >= 2 ? 'lightgreen' : 'lightblue'" (click)='unstagePlayer(i)'>{{ player }}</p>
+    </ion-item>
+    <button [disabled]='stagedPlayers.length > 4' ion-button block (click)='randomiseTeams()'>Losuj drużyny</button>
+  </ion-list>
 </ion-content>
